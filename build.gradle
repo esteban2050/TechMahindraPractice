@@ -2,6 +2,9 @@ plugins {
     id 'java'
 }
 
+sourceCompatibility = JavaVersion.VERSION_18
+targetCompatibility = JavaVersion.VERSION_18
+
 group 'org.example'
 version '1.0-SNAPSHOT'
 
@@ -9,16 +12,19 @@ repositories {
     mavenCentral()
 }
 
+ext{
+    junitVersion='5.9.1'
+}
+
 dependencies {
-    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.8.1'
-    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.8.1'
-    // https://mvnrepository.com/artifact/org.seleniumhq.selenium/selenium-java
-    implementation group: 'org.seleniumhq.selenium', name: 'selenium-java', version: '4.4.0'
-    // https://mvnrepository.com/artifact/org.apache.maven.plugins/maven-compiler-plugin
-    implementation group: 'org.apache.maven.plugins', name: 'maven-compiler-plugin', version: '3.8.1'
+    implementation 'org.seleniumhq.selenium:selenium-java:4.4.0'
+    implementation 'io.github.bonigarcia:webdrivermanager:5.3.0'
+
+    testImplementation "org.junit.jupiter:junit-jupiter-engine:$rootProject.ext.junitVersion"
+    testImplementation 'org.assertj:assertj-core:3.23.1'
 
 }
 
-test {
+test{
     useJUnitPlatform()
 }
