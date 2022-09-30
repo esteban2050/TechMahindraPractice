@@ -1,43 +1,30 @@
 package pages;
 
-import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
-import org.openqa.selenium.support.How;
-import org.openqa.selenium.support.PageFactory;
 
 public class AdminPage {
 
-    private WebDriver driver;
+    @FindBy(xpath = "//span[text()='Admin']")
+    private static WebElement xpathAdmin;
 
-    @FindBy(how = How.NAME, using = "username")
-    private WebElement usernameElement;
-    @FindBy(how = How.NAME, using = "password")
-    private WebElement passwordElement;
-    @FindBy(how = How.CSS, using = "button.oxd-button")
-    private WebElement loginButtonElement;
+    @FindBy(xpath = "//button[text()=' Add ']")
+    private static WebElement buttonAdd;
 
-    @FindBy(how = How.CSS, using = "span.oxd-userdropdown-tab")
-    private WebElement spanLoginElement;
+    @FindBy(xpath = "//div[@class=\"oxd-form-row\"]/div/div/div/div/div[@class=\"oxd-select-wrapper\"]")
+    private static WebElement userRole;
 
-    public AdminPage(WebDriver driver){
-        this.driver = driver;
-        PageFactory.initElements(driver, this);
+    public static void clickOnAdminSlide(){
+        xpathAdmin.click();
     }
 
-    public void typeUsername(String username){
-        usernameElement.sendKeys(username);
-    }
+    /*//*[@id="app"]/div[1]/div[2]/div[2]/div/div/form/div[1]/div/div[1]/div/div[2]/div
+//div[@class="oxd-form-row"]/div/div/div/div/div[@class="oxd-select-wrapper"]
 
-    public void typePassword(String password){
-        passwordElement.sendKeys(password);
-    }
 
-    public void clickOnLogin(){
-        loginButtonElement.click();
-    }
+    div[class="oxd-form-row"]>div[@class="oxd-select-wrapper"]
 
-    public Boolean verifyLoginSuccess(){
-        return spanLoginElement.isDisplayed();
-    }
+//div[@class="oxd-select-text--after"]/i[1]
+//div[@class="oxd-select-text--after"]/i[1]''*/
+
 }
