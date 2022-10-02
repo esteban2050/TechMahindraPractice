@@ -6,7 +6,6 @@ import pages.AdminPage;
 
 public class AdminTest extends LoginTest{
 
-
     @BeforeEach
     public void standInTheSlide(){
         AdminPage.clickOnAdminSlide();
