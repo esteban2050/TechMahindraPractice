@@ -16,8 +16,16 @@ public class PimTest extends openBrowser {
 
     @Test
     public void CreateNewUser() {
-        ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", pimPage.addButton);
+        if(!pimPage.addButton.isDisplayed()){
+            ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", pimPage.addButton);
+        }
         pimPage.addButton.click();
+        pimPage.firstNameInput.sendKeys("Name EmployeeExample");
+        pimPage.lastNameInput.sendKeys("lastname EmployeeExample");
+        pimPage.employeeIdInput.getText();
+        pimPage.employeeIdInput.clear();
+        pimPage.employeeIdInput.sendKeys("103765598");
+        pimPage.createDetailscheckbox.click();
 
     }
 }
