@@ -10,7 +10,6 @@ public class LoginPage {
     public LoginPage(WebDriver driver) {
         PageFactory.initElements(driver, this);
     }
-
     @FindBy(name = "username")
     public WebElement usernameElement;
     @FindBy(name = "password")
