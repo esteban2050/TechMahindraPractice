@@ -59,8 +59,6 @@ public class PimPage{
     public static WebElement joinedDate;
     @FindBy(css = "div[class='oxd-select-text oxd-select-text--active']")
     public static List<WebElement> dropdownLists;
-    @FindBy(css = "//*[@id=\"app\"]/div[1]/div[2]/div[2]/div/div/div/div[2]/div[1]/form/div[1]/div/div[2]/div/div[2]/div/div[2]/div[2]")
-    public static WebElement optionJobTitle;
     public WebElement selectOptionInEditParameters(String parameter){
         return driver.findElement(
                 By.xpath("//div[@role='listbox']//div["+ parameter +"]"));

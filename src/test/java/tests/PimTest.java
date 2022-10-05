@@ -2,8 +2,10 @@ package tests;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
+import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.Keys;
+import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import pages.PimPage;
@@ -21,7 +23,7 @@ public class PimTest extends openBrowser {
     private String jobTitle;
     private String subUnit;
     private String employeeStatus;
-    WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(5));
+    WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
 
     public PimTest() {
         logIn();
@@ -29,7 +31,7 @@ public class PimTest extends openBrowser {
     }
 
     @Test
-    public void CreateNewUser(){
+    public void CreateNewUser() throws InterruptedException {
         if(!PimPage.addButton.isDisplayed()){
             ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", PimPage.addButton);
         }
@@ -37,16 +39,14 @@ public class PimTest extends openBrowser {
         completeFormWithEmployeeInformationToCreate();
         PimPage.saveButton.click();
         searchEmployee(employeeId);
-        wait.until(ExpectedConditions.elementToBeClickable(PimPage.employeeInformation.get(1)));
-        Assertions.assertEquals(employeeId, PimPage.employeeInformation.get(1).getText());
         Assertions.assertEquals(firstName, PimPage.employeeInformation.get(2).getText());
         Assertions.assertEquals(lastName, PimPage.employeeInformation.get(3).getText());
+        Assertions.assertEquals(employeeId, PimPage.employeeInformation.get(1).getText());
     }
 
     @Test
-    public void editUser() {
+    public void editUser() throws InterruptedException {
         searchEmployee(employeeId);
-        wait.until(ExpectedConditions.elementToBeClickable(PimPage.editIcon));
         PimPage.editIcon.click();
         completeFormWithEditedInformation();
         searchEmployee(employeeId);
@@ -56,10 +56,9 @@ public class PimTest extends openBrowser {
     }
 
     @Test
-    public void DeleteUser(){
+    public void DeleteUser() throws InterruptedException {
         searchEmployee(employeeId);
         PimPage.deleteIcon.click();
-        wait.until(ExpectedConditions.elementToBeClickable(PimPage.deletedConfirmed));
         PimPage.deletedConfirmed.click();
         searchEmployee(employeeId);
         Assertions.assertTrue(PimPage.noRecordsFoundMessage.isDisplayed());
@@ -75,10 +74,11 @@ public class PimTest extends openBrowser {
         PimPage.password.get(1).sendKeys("Juan.1037");
     }
 
-    public void completeFormWithEditedInformation(){
+    public void completeFormWithEditedInformation() throws InterruptedException {
         PimPage.categories.get(5).click();
         PimPage.joinedDate.sendKeys(Keys.chord(Keys.CONTROL,"a",Keys.BACK_SPACE));
         PimPage.joinedDate.sendKeys("2021-08-08",Keys.RETURN);
+        Thread.sleep(3000);
         PimPage.dropdownLists.get(0).click(); //Job Title
         pimPage.selectOptionInEditParameters("2").click();
         jobTitle = PimPage.dropdownLists.get(0).getText();
@@ -90,17 +90,17 @@ public class PimTest extends openBrowser {
         pimPage.selectOptionInEditParameters("2").click();
         subUnit = PimPage.dropdownLists.get(2).getText();
         PimPage.dropdownLists.get(3).click();//Location
-        pimPage.selectOptionInEditParameters("1").click();
+        pimPage.selectOptionInEditParameters("2").click();
         PimPage.dropdownLists.get(4).click();//Employment Status
-        pimPage.selectOptionInEditParameters("1").click();
+        pimPage.selectOptionInEditParameters("2").click();
         employeeStatus = PimPage.dropdownLists.get(4).getText();
         PimPage.saveButton.click();
     }
 
-    public void searchEmployee(String employeeIdentification){
+    public void searchEmployee(String employeeIdentification) throws InterruptedException {
         PimPage.xpathPim.click();
-        wait.until(ExpectedConditions.elementToBeClickable(PimPage.employeeId));
         PimPage.employeeId.sendKeys(employeeIdentification);
         PimPage.saveButton.click();
+        Thread.sleep(3000);
     }
 }
