@@ -1,7 +1,5 @@
 package tests;
 
-//import org.junit.jupiter.api.Assertions;
-//import org.junit.jupiter.api.Test;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.Keys;
 import org.testng.annotations.Test;
@@ -9,7 +7,7 @@ import pages.PimPage;
 
 public class PimTest extends BaseTest {
 
-    private final PimPage pimPage = new PimPage(driver);
+
     private final String firstName = "Name EmployeeExample";
     private final String lastName = "lastname EmployeeExample";
     private final String employeeId = "103765598";
@@ -20,13 +18,14 @@ public class PimTest extends BaseTest {
 
     @Test
     public void CreateNewUser(){
+        PimPage pimPage = new PimPage(driver);
         logIn();
-        if (!PimPage.addButton.isDisplayed()) {
-            ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", PimPage.addButton);
+        if (!pimPage.addButton.isDisplayed()) {
+            ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", pimPage.addButton);
         }
-        PimPage.addButton.click();
+        pimPage.addButton.click();
         completeFormWithEmployeeInformationToCreate();
-        PimPage.saveButton.click();
+        pimPage.saveButton.click();
         searchEmployee(employeeId);
 
         /*Assertions.assertEquals(firstName, PimPage.employeeInformation.get(2).getText());

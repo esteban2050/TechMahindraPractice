@@ -13,7 +13,7 @@ import java.time.Duration;
 
 public class BaseTest {
 
-    protected WebDriver driver;
+    protected static WebDriver driver;
     private static final String url = "https://opensource-demo.orangehrmlive.com/web/index.php/auth/login";
 
     @BeforeTest
@@ -34,6 +34,10 @@ public class BaseTest {
         driver = new ChromeDriver(chromeOptions);
         driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(5));
         driver.get(url);
+    }
+
+    public static WebDriver getDriver(){
+        return driver;
     }
 
     @AfterTest
