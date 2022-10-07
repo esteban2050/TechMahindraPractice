@@ -3,11 +3,10 @@ package pages;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
-import org.openqa.selenium.support.PageFactory;
 
 import java.util.List;
 
-public class AdminPage {
+public class AdminPage extends BasePage{
 
     @FindBy(xpath = "//span[text()='Admin']")
     public static WebElement xpathAdmin;
@@ -22,8 +21,18 @@ public class AdminPage {
     @FindBy(xpath = "//span[text()='Admin']")
     public static WebElement adminOption;
 
+    //Add user tab
+    @FindBy(css = "div[class=\"oxd-select-text oxd-select-text--active\"]")
+    public static List<WebElement> dropDownLists;
+    @FindBy(css = "div[class=\"oxd-autocomplete-text-input oxd-autocomplete-text-input--active\"] > input")
+    public static WebElement employeeName;
+    @FindBy(xpath = "//*[@id=\"app\"]/div[1]/div[2]/div[2]/div/div/form/div[1]/div/div[4]/div/div[2]/input")
+    public static WebElement username;
+    @FindBy(css = "input[type=\"password\"]")
+    public static List<WebElement> passwords;
+
     public AdminPage(WebDriver driver){
-        PageFactory.initElements(driver, this);
+        super(driver);
     }
 
     public static void selectRole(){

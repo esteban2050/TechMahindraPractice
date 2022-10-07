@@ -1,21 +1,16 @@
 package tests;
 
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.Test;
-import resources.helpers.openBrowser;
+import org.testng.annotations.Test;
 
-import static org.assertj.core.api.Assertions.assertThat;
+//import static org.assertj.core.api.Assertions.assertThat;
 
-public class LoginTest extends openBrowser {
+public class LoginTest extends BaseTest {
 
     @Test
     public void login() {
         logIn();
-        assertThat(loginPage.verifyLoginSuccess()).isEqualTo(true);
+        //assertThat(loginPage.verifyLoginSuccess()).isEqualTo(true);
     }
 
-    @AfterEach
-    public void closeBrowser() {
-        driver.quit();
-    }
+
 }

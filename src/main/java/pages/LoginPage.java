@@ -3,13 +3,9 @@ package pages;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
-import org.openqa.selenium.support.PageFactory;
 
-public class LoginPage {
+public class LoginPage extends BasePage{
 
-    public LoginPage(WebDriver driver) {
-        PageFactory.initElements(driver, this);
-    }
     @FindBy(name = "username")
     public WebElement usernameElement;
     @FindBy(name = "password")
@@ -18,6 +14,10 @@ public class LoginPage {
     public WebElement loginButtonElement;
     @FindBy(css = "span.oxd-userdropdown-tab")
     public WebElement spanLoginElement;
+
+    public LoginPage(WebDriver driver) {
+        super(driver);
+    }
 
     public void loginToThePage(String username, String password) {
         typeInField(usernameElement, username);

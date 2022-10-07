@@ -4,18 +4,11 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
-import org.openqa.selenium.support.PageFactory;
 
 import java.util.List;
 
 
-public class PimPage{
-    WebDriver driver;
-
-    public PimPage(WebDriver driver){
-        this.driver = driver;
-        PageFactory.initElements(driver, this);
-    }
+public class PimPage extends BasePage{
 
     @FindBy(xpath = "//span[text()='PIM']")
     public static WebElement xpathPim;
@@ -59,9 +52,13 @@ public class PimPage{
     public static WebElement joinedDate;
     @FindBy(css = "div[class='oxd-select-text oxd-select-text--active']")
     public static List<WebElement> dropdownLists;
+    
+    public PimPage(WebDriver driver){
+        super(driver);
+    }
+
     public WebElement selectOptionInEditParameters(String parameter){
         return driver.findElement(
                 By.xpath("//div[@role='listbox']//div["+ parameter +"]"));
     }
-
 }
