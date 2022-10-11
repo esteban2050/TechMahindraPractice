@@ -21,15 +21,14 @@ public class BaseTest {
         WebDriverManager.chromedriver().setup();
         ChromeOptions chromeOptions = new ChromeOptions();
         chromeOptions
-                //.addArguments("--headless")
-                .addArguments("--lang=en")
+                .addArguments("--start-maximized")
                 .addArguments("--no-sandbox")
                 .addArguments("--disable-download-notification")
                 .addArguments("disable-gpu")
                 .addArguments("--ignore-certificate-error")
                 .addArguments("--always-authorize-plugins")
-                .addArguments("--disable-extensions")
-                .addArguments("--window-size=1920,1080")
+                .addArguments("--disable-infobars")
+                //.addArguments("--window-size=1920,1080")
                 .addArguments("--disable-popup-blocking");
         driver = new ChromeDriver(chromeOptions);
         driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(5));
@@ -40,10 +39,10 @@ public class BaseTest {
         return driver;
     }
 
-    @AfterTest
-    public void closeBrowser() {
-        driver.close();
-    }
+//    @AfterTest
+//    public void closeBrowser() {
+//        driver.close();
+//    }
 
     public void logIn(){
         LoginPage loginPage = new LoginPage(driver);

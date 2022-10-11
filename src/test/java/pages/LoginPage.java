@@ -7,13 +7,13 @@ import org.openqa.selenium.support.FindBy;
 public class LoginPage extends BasePage{
 
     @FindBy(name = "username")
-    public WebElement usernameElement;
+    WebElement usernameElement;
     @FindBy(name = "password")
-    public WebElement passwordElement;
+    WebElement passwordElement;
     @FindBy(css = "button.oxd-button")
-    public WebElement loginButtonElement;
+    WebElement loginButtonElement;
     @FindBy(css = "span.oxd-userdropdown-tab")
-    public WebElement spanLoginElement;
+    WebElement spanLoginElement;
 
     public LoginPage(WebDriver driver) {
         super(driver);

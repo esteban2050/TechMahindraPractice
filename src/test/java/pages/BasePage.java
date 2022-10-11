@@ -16,9 +16,9 @@ public class BasePage {
     public BasePage (WebDriver driver) {
         this.driver = driver;
         this.wait = new FluentWait<>(driver)
-                    .withTimeout(Duration.ofSeconds(10))
-                    .pollingEvery(Duration.ofSeconds(1))
+                    .withTimeout(Duration.ofSeconds(20))
+                    .pollingEvery(Duration.ofSeconds(2))
                     .ignoring(NoSuchElementException.class);
-            PageFactory.initElements(driver, this);
+        PageFactory.initElements(driver, this);
     }
 }

@@ -1,15 +1,17 @@
 package tests;
 
+import org.testng.Assert;
 import org.testng.annotations.Test;
+import pages.LoginPage;
 
-//import static org.assertj.core.api.Assertions.assertThat;
 
 public class LoginTest extends BaseTest {
 
     @Test
     public void login() {
+        LoginPage loginPage = new LoginPage(driver);
         logIn();
-        //assertThat(loginPage.verifyLoginSuccess()).isEqualTo(true);
+        Assert.assertEquals(loginPage.verifyLoginSuccess(),true);
     }
 
 
