@@ -1,16 +1,15 @@
 package tests;
 
-//mport org.junit.jupiter.api.BeforeEach;
-//import org.junit.jupiter.api.Test;
+import org.testng.annotations.Test;
 import pages.AdminPage;
 
 public class AdminTest extends LoginTest{
 
-    //@BeforeEach
-    public void standInTheSlide(){
+
+    @Test
+    public void CreateNewAdmin(){
         AdminPage.clickOnAdminSlide();
     }
-
 
 
 }

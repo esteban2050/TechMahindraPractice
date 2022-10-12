@@ -1,5 +1,6 @@
 package tests;
 
+import helpers.constants;
 import models.User;
 import org.openqa.selenium.JavascriptExecutor;
 import org.testng.Assert;
@@ -8,21 +9,20 @@ import pages.PimPage;
 
 import java.util.Map;
 
+import static helpers.creationProcess.*;
+
 public class PimTest extends BaseTest {
 
-    private final User user = PimPage.buildUser();
+    private final User user = buildUser();
 
     @Test(priority = 1)
     public void CreateNewUser() {
         PimPage pimPage = new PimPage(driver);
-        logIn();
-        if (!pimPage.addButton.isDisplayed()) {
-            ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", pimPage.addButton);
-        }
-        pimPage.addButton.click();
-        pimPage.completeFormWithEmployeeInformationToCreate(user, pimPage);
-        pimPage.saveButton.click();
+        logIn(constants.USER, constants.PASSWORD);
+        createUser(pimPage, user, driver);
         pimPage.searchEmployee(pimPage, user.getEmployeeId());
+        pimPage.waitForElementStatus("visible", pimPage.firstElementOfResult);
+        ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", pimPage.firstElementOfResult);
         Assert.assertEquals(user.getEmployeeId(), pimPage.employeeInformation.get(1).getText());
         Assert.assertEquals(user.getFirstName(), pimPage.employeeInformation.get(2).getText());
         Assert.assertEquals(user.getLastName(), pimPage.employeeInformation.get(3).getText());
@@ -32,8 +32,9 @@ public class PimTest extends BaseTest {
     public void editUser() {
         PimPage pimPage = new PimPage(driver);
         Map<String, String> importantValuesEdited;
-        logIn();
+        logIn(constants.USER, constants.PASSWORD);
         pimPage.searchEmployee(pimPage, user.getEmployeeId());
+        pimPage.waitForElementStatus("visible", pimPage.firstElementOfResult);
         ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", pimPage.editIcon);
         importantValuesEdited = pimPage.completeFormWithEditedInformation(pimPage);
         pimPage.searchEmployee(pimPage, user.getEmployeeId());
@@ -45,7 +46,7 @@ public class PimTest extends BaseTest {
     @Test(priority = 3)
     public void DeleteUser() {
         PimPage pimPage = new PimPage(driver);
-        logIn();
+        logIn(constants.USER, constants.PASSWORD);
         pimPage.searchEmployee(pimPage, user.getEmployeeId());
         try {
             Thread.sleep(4);
@@ -64,7 +65,4 @@ public class PimTest extends BaseTest {
         }
         Assert.assertTrue(pimPage.noRecordsFoundMessage.getText().equals("No Records Found"));
     }
-
-
-
 }

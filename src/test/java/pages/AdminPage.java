@@ -48,4 +48,6 @@ public class AdminPage extends BasePage{
         xpathAdmin.click();
     }
 
+
+
 }

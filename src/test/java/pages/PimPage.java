@@ -66,28 +66,6 @@ public class PimPage extends BasePage{
                 By.xpath("//div[@role='listbox']//div["+ parameter +"]"));
     }
 
-    public static User buildUser(){
-        User user = UserBuilder.instanceUserObject()
-                .withFirstName("juan Esteban")
-                .withEmployeeId("0256114")
-                .withLastName("Lopez Giraldo")
-                .withUserName("juan.lg")
-                .withPassword("Admin.1234")
-                .build();
-        return user;
-    }
-
-    public void completeFormWithEmployeeInformationToCreate(User user, PimPage pimPage) {
-        pimPage.firstNameInput.sendKeys(user.getFirstName());
-        pimPage.lastNameInput.sendKeys(user.getLastName());
-        pimPage.employeeIdInput.sendKeys(Keys.chord(Keys.CONTROL, "a", Keys.DELETE));
-        pimPage.employeeIdInput.sendKeys(user.getEmployeeId());
-        pimPage.createDetailsCheckbox.click();
-        pimPage.usernameInput.sendKeys(user.getUserName());
-        pimPage.password.get(0).sendKeys(user.getPassword());
-        pimPage.password.get(1).sendKeys(user.getPassword());
-    }
-
     public Map<String, String> completeFormWithEditedInformation(PimPage pimPage)  {
         Map<String, String> importantValues = new HashMap<>();
         wait.until(ExpectedConditions.elementToBeClickable(pimPage.editIcon));
@@ -120,17 +98,12 @@ public class PimPage extends BasePage{
     }
 
     public void searchEmployee(PimPage pimPage, String employeeIdentification) {
+        wait.until(ExpectedConditions.visibilityOf(pimPage.xpathPim));
         pimPage.xpathPim.click();
+        wait.until(ExpectedConditions.elementToBeSelected(pimPage.employeeId));
         pimPage.employeeId.sendKeys(employeeIdentification);
         wait.until(ExpectedConditions.elementToBeClickable(pimPage.saveButton));
         pimPage.saveButton.click();
-        try {
-            Thread.sleep(4);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-        ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", pimPage.firstElementOfResult);
-//        wait.until(ExpectedConditions.visibilityOf(pimPage.firstElementOfResult));
     }
 
     public void waitForElementStatus(String status, WebElement element){

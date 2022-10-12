@@ -39,14 +39,14 @@ public class BaseTest {
         return driver;
     }
 
-//    @AfterTest
-//    public void closeBrowser() {
-//        driver.close();
-//    }
+    @AfterTest
+    public void closeBrowser() {
+        driver.close();
+    }
 
-    public void logIn(){
+    public void logIn(String user, String password){
         LoginPage loginPage = new LoginPage(driver);
-        loginPage.loginToThePage("Admin", "admin123");
+        loginPage.loginToThePage(user, password);
     }
 
 
