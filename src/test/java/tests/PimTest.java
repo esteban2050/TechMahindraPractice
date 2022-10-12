@@ -30,9 +30,15 @@ public class PimTest extends BaseTest {
 
     @Test(priority = 2)
     public void editUser() {
-        PimPage pimPage = new PimPage(driver);
         Map<String, String> importantValuesEdited;
+        PimPage pimPage = new PimPage(driver);
         logIn(constants.USER, constants.PASSWORD);
+        createUser(pimPage, user, driver);
+        try {
+            Thread.sleep(10);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
         pimPage.searchEmployee(pimPage, user.getEmployeeId());
         pimPage.waitForElementStatus("visible", pimPage.firstElementOfResult);
         ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", pimPage.editIcon);

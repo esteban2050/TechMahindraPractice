@@ -71,30 +71,47 @@ public class PimPage extends BasePage{
         wait.until(ExpectedConditions.elementToBeClickable(pimPage.editIcon));
         pimPage.editIcon.click();
         pimPage.categories.get(5).click();
-        pimPage.joinedDate.sendKeys(Keys.chord(Keys.CONTROL, "a", Keys.BACK_SPACE));
-        pimPage.joinedDate.sendKeys("2021-08-08", Keys.RETURN);
+        fillField("Date",pimPage);
         wait.until(ExpectedConditions.elementToBeClickable(pimPage.dropdownLists.get(0)));
-        try {
-            Thread.sleep(3000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-        pimPage.dropdownLists.get(0).click(); //Job Title
-        pimPage.selectOptionInEditParameters("2").click();
+        fillField("JobTitle",pimPage);
+        fillField("JobCategory",pimPage);
+        fillField("SubUnit",pimPage);
+        fillField("Location",pimPage);
+        fillField("EmploymentStatus",pimPage);
         importantValues.put("jobTitle",pimPage.dropdownLists.get(0).getText());
-        pimPage.dropdownLists.get(1).click();//Job Category
-        pimPage.selectOptionInEditParameters("2").click();
-//        wait.until(ExpectedConditions.elementToBeClickable(pimPage.dropdownLists.get(2)));
-        pimPage.dropdownLists.get(2).click();//Sub Unit
-        pimPage.selectOptionInEditParameters("2").click();
         importantValues.put("subUnit", pimPage.dropdownLists.get(2).getText());
-        pimPage.dropdownLists.get(3).click();//Location
-        pimPage.selectOptionInEditParameters("2").click();
-        pimPage.dropdownLists.get(4).click();//Employment Status
-        pimPage.selectOptionInEditParameters("2").click();
         importantValues.put("employeeStatus", pimPage.dropdownLists.get(4).getText());
         pimPage.saveButton.click();
         return importantValues;
+    }
+
+    public void fillField(String field, PimPage pimPage){
+        switch (field) {
+            case "Date" -> {
+                pimPage.joinedDate.sendKeys(Keys.chord(Keys.CONTROL, "a", Keys.BACK_SPACE));
+                pimPage.joinedDate.sendKeys("2021-08-08", Keys.RETURN);
+            }
+            case "JobTitle" -> {
+                pimPage.dropdownLists.get(0).click();
+                pimPage.selectOptionInEditParameters("2").click();
+            }
+            case "JobCategory" -> {
+                pimPage.dropdownLists.get(1).click();//Job Category
+                pimPage.selectOptionInEditParameters("2").click();
+            }
+            case "SubUnit" -> {
+                pimPage.dropdownLists.get(2).click();//Sub Unit
+                pimPage.selectOptionInEditParameters("2").click();
+            }
+            case "Location" -> {
+                pimPage.dropdownLists.get(3).click();//Location
+                pimPage.selectOptionInEditParameters("2").click();
+            }
+            case "EmploymentStatus" -> {
+                pimPage.dropdownLists.get(4).click();//Employment Status
+                pimPage.selectOptionInEditParameters("2").click();
+            }
+        }
     }
 
     public void searchEmployee(PimPage pimPage, String employeeIdentification) {
