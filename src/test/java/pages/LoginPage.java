@@ -17,12 +17,14 @@ public class LoginPage extends BasePage{
     WebElement spanLoginElement;
     @FindBy(css = "div[class^='oxd-alert-content']>p")
     WebElement errorAlert;
-    @FindBy(css = "ul>li[class='--active oxd-userdropdown']")
+    @FindBy(css = "ul>li[class='oxd-userdropdown']")
     public WebElement profileIcon;
+    @FindBy(css = "div[class='oxd-grid-2 orangehrm-about']>div:nth-child(2)")
+    public WebElement companyName;
 
     public WebElement selectOptionInOptionsProfileIcon(String parameter){
         return driver.findElement(
-                By.cssSelector("//a[text()='"+ parameter + "']"));
+                By.xpath("//a[text()='"+ parameter + "']"));
     }
 
     public LoginPage(WebDriver driver) {
