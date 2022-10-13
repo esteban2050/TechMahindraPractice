@@ -3,16 +3,34 @@ package tests;
 import helpers.constants;
 import org.testng.Assert;
 import org.testng.annotations.Test;
+import pages.HomePage;
 import pages.LoginPage;
 
 public class HomeTest extends BaseTest{
 
     @Test
-    public void ValidateAboutOption(){
-        LoginPage loginPage = new LoginPage(driver);
+    public void validateLogout(){
+        HomePage homePage = new HomePage(driver);
+        LoginPage loginpage = new LoginPage(driver);
         logIn(constants.USER, constants.PASSWORD);
-        loginPage.profileIcon.click();
-        loginPage.selectOptionInOptionsProfileIcon("About").click();
-        Assert.assertEquals(loginPage.companyName.getText(), "OrangeHRM");
+        homePage.profileIcon.click();
+        homePage.selectOptionInOptionsProfileIcon("Logout").click();
+        Assert.assertTrue(loginpage.usernameElement.isDisplayed());
+    }
+    @Test
+    public void ValidateAboutOption(){
+        HomePage homePage = new HomePage(driver);
+        logIn(constants.USER, constants.PASSWORD);
+        homePage.profileIcon.click();
+        homePage.selectOptionInOptionsProfileIcon("About").click();
+        Assert.assertEquals(homePage.companyName.getText(), "OrangeHRM");
+    }
+    @Test
+    public void ValidateSupportOption(){
+        HomePage homePage = new HomePage(driver);
+        logIn(constants.USER, constants.PASSWORD);
+        homePage.profileIcon.click();
+        homePage.selectOptionInOptionsProfileIcon("Support").click();
+        Assert.assertTrue(homePage.supportText.getText().contains("ossuport@orangehrm.com"));
     }
 }

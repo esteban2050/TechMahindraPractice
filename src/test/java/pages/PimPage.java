@@ -1,7 +1,5 @@
 package pages;
 
-import models.User;
-import models.UserBuilder;
 import org.openqa.selenium.*;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.ExpectedConditions;
@@ -9,6 +7,8 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import static helpers.creationProcess.askForElement;
 
 public class PimPage extends BasePage{
 
@@ -40,7 +40,7 @@ public class PimPage extends BasePage{
     public List<WebElement> employeeInformation;
     @FindBy(css = "button>i[class='oxd-icon bi-trash']")
     public WebElement deleteIcon;
-    @FindBy(css = "button>i[class='oxd-icon bi-pencil-fill']")
+    @FindBy(css = "div[class='oxd-table-cell oxd-padding-cell']:nth-child(9)>div>button:nth-child(2)")
     public WebElement editIcon;
     @FindBy(css = "button.oxd-button.oxd-button--medium.oxd-button--label-danger.orangehrm-button-margin")
     public WebElement deletedConfirmed;
@@ -49,6 +49,9 @@ public class PimPage extends BasePage{
     @FindBy(xpath = "//div[@class='oxd-table orangehrm-employee-list'][1]/div[2]/div[1]")
     public WebElement firstElementOfResult;
 
+    @FindBy(css = "div[class='oxd-table-row oxd-table-row--with-border']")
+    public WebElement headersResultTable;
+
     //Pim edit information
     @FindBy(css = "div[class='orangehrm-tabs-wrapper']")
     public List<WebElement> categories;
@@ -56,6 +59,22 @@ public class PimPage extends BasePage{
     public WebElement joinedDate;
     @FindBy(css = "div[class='oxd-select-text oxd-select-text--active']")
     public List<WebElement> dropdownLists;
+    @FindBy(css = "div.orangehrm-edit-employee-image>img")
+    public WebElement imageProfile;
+
+    //Others
+    @FindBy(css = "div[class$='oxd-toast-content--success']")
+    public WebElement successCreationAlert;
+    @FindBy(css = "div>h5")
+    public WebElement employeeReportTitle;
+    @FindBy(css = "div[class='orangehrm-card-container']>p")
+    public WebElement optionalFieldsTitle;
+    @FindBy(css = "ul>li[class^='oxd-topbar-body-nav-tab']")
+    public List<WebElement> buttonsHeader;
+    @FindBy(css = "div[class='oxd-input-group oxd-input-field-bottom-space']>span")
+    public WebElement spanErrorMessage;
+    @FindBy(css = "ul[class='oxd-dropdown-menu']>li")
+    public List<WebElement> optionsConfigurationButton;
     
     public PimPage(WebDriver driver){
         super(driver);
@@ -68,18 +87,16 @@ public class PimPage extends BasePage{
 
     public Map<String, String> completeFormWithEditedInformation(PimPage pimPage)  {
         Map<String, String> importantValues = new HashMap<>();
-        wait.until(ExpectedConditions.elementToBeClickable(pimPage.editIcon));
-        pimPage.editIcon.click();
+        askForElement(pimPage.editIcon);
         pimPage.categories.get(5).click();
-        fillField("Date",pimPage);
-        wait.until(ExpectedConditions.elementToBeClickable(pimPage.dropdownLists.get(0)));
+        wait.until(ExpectedConditions.visibilityOf(pimPage.joinedDate));
         fillField("JobTitle",pimPage);
+        importantValues.put("jobTitle",pimPage.dropdownLists.get(0).getText());
         fillField("JobCategory",pimPage);
         fillField("SubUnit",pimPage);
+        importantValues.put("subUnit", pimPage.dropdownLists.get(2).getText());
         fillField("Location",pimPage);
         fillField("EmploymentStatus",pimPage);
-        importantValues.put("jobTitle",pimPage.dropdownLists.get(0).getText());
-        importantValues.put("subUnit", pimPage.dropdownLists.get(2).getText());
         importantValues.put("employeeStatus", pimPage.dropdownLists.get(4).getText());
         pimPage.saveButton.click();
         return importantValues;
@@ -117,7 +134,6 @@ public class PimPage extends BasePage{
     public void searchEmployee(PimPage pimPage, String employeeIdentification) {
         wait.until(ExpectedConditions.visibilityOf(pimPage.xpathPim));
         pimPage.xpathPim.click();
-        wait.until(ExpectedConditions.elementToBeSelected(pimPage.employeeId));
         pimPage.employeeId.sendKeys(employeeIdentification);
         wait.until(ExpectedConditions.elementToBeClickable(pimPage.saveButton));
         pimPage.saveButton.click();

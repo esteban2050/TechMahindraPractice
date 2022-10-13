@@ -6,7 +6,6 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 
 public class LoginPage extends BasePage{
-
     @FindBy(name = "username")
     public WebElement usernameElement;
     @FindBy(name = "password")
@@ -17,15 +16,6 @@ public class LoginPage extends BasePage{
     WebElement spanLoginElement;
     @FindBy(css = "div[class^='oxd-alert-content']>p")
     WebElement errorAlert;
-    @FindBy(css = "ul>li[class='oxd-userdropdown']")
-    public WebElement profileIcon;
-    @FindBy(css = "div[class='oxd-grid-2 orangehrm-about']>div:nth-child(2)")
-    public WebElement companyName;
-
-    public WebElement selectOptionInOptionsProfileIcon(String parameter){
-        return driver.findElement(
-                By.xpath("//a[text()='"+ parameter + "']"));
-    }
 
     public LoginPage(WebDriver driver) {
         super(driver);

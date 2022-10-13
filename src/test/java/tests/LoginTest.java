@@ -21,15 +21,4 @@ public class LoginTest extends BaseTest {
         logIn("juanito", "juanito123");
         Assert.assertEquals(loginPage.verifyLoginIncorrect(), "Invalid credentials");
     }
-
-    @Test
-    public void validateLogout(){
-        LoginPage loginPage = new LoginPage(driver);
-        logIn(constants.USER, constants.PASSWORD);
-        loginPage.profileIcon.click();
-        loginPage.selectOptionInOptionsProfileIcon("Logout").click();
-        Assert.assertTrue(loginPage.usernameElement.isDisplayed());
-    }
-
-
 }
