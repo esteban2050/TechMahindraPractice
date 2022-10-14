@@ -6,6 +6,7 @@
             <class name="tests.LoginTest"/>
             <class name="tests.PimTest"/>
             <class name="tests.HomeTest"/>
+            <class name="tests.AdminTest"/>
         </classes>
     </test>
 </suite>

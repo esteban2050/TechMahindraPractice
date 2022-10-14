@@ -21,9 +21,11 @@ public class PimTest extends BaseTest {
         PimPage pimPage = new PimPage(driver);
         logIn(constants.USER, constants.PASSWORD);
         createUser(pimPage, user, driver);
+        pimPage.waitForElementStatus("visible", pimPage.imageProfile);
         pimPage.searchEmployee(pimPage, user.getEmployeeId());
         pimPage.waitForElementStatus("visible", pimPage.firstElementOfResult);
         ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", pimPage.firstElementOfResult);
+        pimPage.waitForElementStatus("visible", pimPage.employeeInformation.get(1));
         Assert.assertEquals(user.getEmployeeId(), pimPage.employeeInformation.get(1).getText());
         Assert.assertEquals(user.getFirstName(), pimPage.employeeInformation.get(2).getText());
         Assert.assertEquals(user.getLastName(), pimPage.employeeInformation.get(3).getText());

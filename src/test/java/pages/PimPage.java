@@ -135,7 +135,7 @@ public class PimPage extends BasePage{
         wait.until(ExpectedConditions.visibilityOf(pimPage.xpathPim));
         pimPage.xpathPim.click();
         pimPage.employeeId.sendKeys(employeeIdentification);
-        wait.until(ExpectedConditions.elementToBeClickable(pimPage.saveButton));
+        wait.until(ExpectedConditions.visibilityOf(pimPage.saveButton));
         pimPage.saveButton.click();
     }
 

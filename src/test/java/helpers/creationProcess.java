@@ -6,9 +6,10 @@ import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.StaleElementReferenceException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import pages.BasePage;
 import pages.PimPage;
 
-public class creationProcess {
+public class creationProcess{
 
     public static User buildUser(){
         User user = UserBuilder.instanceUserObject()
@@ -23,17 +24,21 @@ public class creationProcess {
 
     public static User buildAdmin(){
         User user = UserBuilder.instanceUserObject()
-                .withFirstName("juan Esteban")
-                .withUserName("Ajuan.lg" + (int)(Math.random() * 100))
+                .withFirstName("julano")
+                .withLastName("whatever")
+                .withUserName("julano.lg" + (int)(Math.random() * 500))
                 .withPassword("Admin.1234")
                 .build();
         return user;
     }
-    public static void createUser(PimPage pimPage, User user, WebDriver driver){
+    public static void SearchAddButton(PimPage pimPage,WebDriver driver){
         if (!pimPage.addButton.isDisplayed()) {
             ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", pimPage.addButton);
         }
         pimPage.addButton.click();
+    }
+    public static void createUser(PimPage pimPage, User user, WebDriver driver){
+        SearchAddButton(pimPage,driver);
         fillBasicUserInformation(user, pimPage);
         fillCreateLoginDetails(user, pimPage);
         pimPage.saveButton.click();

@@ -4,6 +4,7 @@ import models.User;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 
 import java.util.List;
 
@@ -17,22 +18,26 @@ public class AdminPage extends BasePage{
     public List<WebElement> selectCategories;
     @FindBy(css = "div.oxd-select-option")
     public List<WebElement> selectOptions;
-    @FindBy(xpath = "//span[text()='Enabled']")
-    public WebElement enabledOption;
-    @FindBy(xpath = "//span[text()='Admin']")
-    public WebElement adminOption;
 
     //Add user tab
-    @FindBy(css = "div[class='oxd-select-text oxd-select-text--active']")
-    public List<WebElement> dropDownLists;
     @FindBy(css = "div[class^='oxd-autocomplete-text-input'] > input")
     public WebElement employeeName;
     @FindBy(css = "div[class$='oxd-input-field-bottom-space'] > div>input")
     public WebElement username;
+    @FindBy(css = "span[class$='oxd-input-group__message']")
+    public WebElement errorSpanUserName;
     @FindBy(css = "button[type='submit']")
     public WebElement saveButton;
     @FindBy(css = "input[type='password']")
     public List<WebElement> passwords;
+    @FindBy(css = "div[role='listbox']>div:nth-child(1)>span")
+    public WebElement resultEmployeeName;
+
+    //Result search
+    @FindBy(css = "div[class='oxd-table-cell oxd-padding-cell']")
+    public List<WebElement> resultEmployee;
+    @FindBy(css = "div[class='oxd-loading-spinner']")
+    public WebElement loadingSpinner;
 
     public AdminPage(WebDriver driver){
         super(driver);
@@ -55,12 +60,37 @@ public class AdminPage extends BasePage{
     public void addNewUser(User user){
         selectRole();
         employeeName.sendKeys(user.getFirstName());
+        waitForElementStatus("visible", resultEmployeeName);
+        resultEmployeeName.click();
         selectStatus();
+        username.click();
         username.sendKeys(user.getUserName());
         passwords.get(0).sendKeys(user.getPassword());
         passwords.get(1).sendKeys(user.getPassword());
+        waitForElementStatus("noVisible", errorSpanUserName);
         saveButton.click();
     }
 
+    public void searchAdminUser(User user) {
+        clickOnAdminSlide();
+        username.sendKeys(user.getUserName());
+        saveButton.click();
+        waitForElementStatus("visible",loadingSpinner);
+        waitForElementStatus("noVisible",loadingSpinner);
+        waitForElementStatus("visible",resultEmployee.get(1));
+    }
+    public void waitForElementStatus(String status, WebElement element){
+        switch (status){
+            case "click":
+                wait.until(ExpectedConditions.elementToBeClickable(element));
+                break;
+            case "visible":
+                wait.until(ExpectedConditions.visibilityOf(element));
+                break;
+            case "noVisible":
+                wait.until(ExpectedConditions.invisibilityOf(element));
+                break;
+        }
+    }
 
 }
