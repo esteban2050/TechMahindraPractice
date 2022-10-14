@@ -12,6 +12,7 @@ import static helpers.creationProcess.askForElement;
 
 public class PimPage extends BasePage{
 
+    //Creation fields
     @FindBy(xpath = "//span[text()='PIM']")
     public WebElement xpathPim;
     @FindBy(xpath = "//button[text()=' Add ']")
@@ -30,8 +31,12 @@ public class PimPage extends BasePage{
     public List<WebElement> password;
     @FindBy(css = "button[type ='submit']")
     public WebElement saveButton;
+    @FindBy(css = "div[class='--name-grouped-field']>div>span")
+    public WebElement errorSpanFieldRequired;
+    @FindBy(css = "div[class='oxd-grid-item oxd-grid-item--gutters']>div>span")
+    public WebElement errorSpanMessageUserName;
 
-    //Employee Information #app > div.oxd-layout > div.oxd-layout-container > div.oxd-layout-context > div > div.orangehrm-paper-container > div.orangehrm-container > div > div.oxd-table-body > div:nth-child(1) > div > div:nth-child(9) > div > button:nth-child(1)
+    //Employee Information
     @FindBy(css = "div:nth-child(2) > input")
     public WebElement employeeId;
 

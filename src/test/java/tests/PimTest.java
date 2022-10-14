@@ -107,4 +107,24 @@ public class PimTest extends BaseTest {
         fillCreateLoginDetails(user, pimPage);
         Assert.assertTrue(pimPage.spanErrorMessage.isDisplayed());
     }
+    @Test
+    public void validateCreationUserWithoutName(){
+        User user = buildUserDataIncorrect();
+        PimPage pimPage = new PimPage(driver);
+        logIn(constants.USER, constants.PASSWORD);
+        SearchAddButton(pimPage,driver);
+        fillBasicUserInformation(user,pimPage);
+        pimPage.saveButton.click();
+        Assert.assertTrue(pimPage.errorSpanFieldRequired.isDisplayed());
+    }
+    @Test
+    public void validateCreationUserWithUsernameLessCHaracters(){
+        User user = buildUserDataIncorrect();
+        PimPage pimPage = new PimPage(driver);
+        logIn(constants.USER, constants.PASSWORD);
+        SearchAddButton(pimPage,driver);
+        fillCreateLoginDetails(user,pimPage);
+        pimPage.saveButton.click();
+        Assert.assertTrue(pimPage.errorSpanMessageUserName.getText().contains("Should be least 5 characters"));
+    }
 }

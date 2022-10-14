@@ -31,6 +31,15 @@ public class creationProcess{
                 .build();
         return user;
     }
+    public static User buildUserDataIncorrect(){
+        User user = UserBuilder.instanceUserObject()
+                .withFirstName("")
+                .withLastName("whatever")
+                .withUserName("ju")
+                .withPassword("Admin.1234")
+                .build();
+        return user;
+    }
     public static void SearchAddButton(PimPage pimPage,WebDriver driver){
         if (!pimPage.addButton.isDisplayed()) {
             ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", pimPage.addButton);
