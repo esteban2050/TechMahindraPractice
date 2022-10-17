@@ -118,7 +118,7 @@ public class PimTest extends BaseTest {
         Assert.assertTrue(pimPage.errorSpanFieldRequired.isDisplayed());
     }
     @Test
-    public void validateCreationUserWithUsernameLessCHaracters(){
+    public void validateCreationUserWithUsernameLessCharacters(){
         User user = buildUserDataIncorrect();
         PimPage pimPage = new PimPage(driver);
         logIn(constants.USER, constants.PASSWORD);
