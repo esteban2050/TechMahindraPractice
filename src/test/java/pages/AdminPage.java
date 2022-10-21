@@ -1,12 +1,15 @@
 package pages;
 
 import models.User;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 
 import java.util.List;
+
+import static helpers.creationProcess.askForElement;
 
 public class AdminPage extends BasePage{
 
@@ -38,6 +41,12 @@ public class AdminPage extends BasePage{
     public List<WebElement> resultEmployee;
     @FindBy(css = "div[class='oxd-loading-spinner']")
     public WebElement loadingSpinner;
+    @FindBy(css = "button[class='oxd-icon-button oxd-table-cell-action-space']:nth-child(1)")
+    public WebElement deleteIcon;
+    @FindBy(css = "button.oxd-button.oxd-button--medium.oxd-button--label-danger.orangehrm-button-margin")
+    public WebElement deletedConfirmed;
+    @FindBy(css = "div[class$='orangehrm-vertical-padding']>span")
+    public WebElement resultMessage;
 
     public AdminPage(WebDriver driver){
         super(driver);
@@ -52,7 +61,7 @@ public class AdminPage extends BasePage{
         selectCategories.get(1).click();
         selectOptions.get(1).click();
     }
-    public void clickOnAdminSlide(){
+    public void clickOnAdminSide(){
         xpathAdmin.click();
     }
 
@@ -72,12 +81,12 @@ public class AdminPage extends BasePage{
     }
 
     public void searchAdminUser(User user) {
-        clickOnAdminSlide();
+        clickOnAdminSide();
         username.sendKeys(user.getUserName());
         saveButton.click();
         waitForElementStatus("visible",loadingSpinner);
         waitForElementStatus("noVisible",loadingSpinner);
-        waitForElementStatus("visible",resultEmployee.get(1));
+
     }
     public void waitForElementStatus(String status, WebElement element){
         switch (status){
@@ -91,6 +100,20 @@ public class AdminPage extends BasePage{
                 wait.until(ExpectedConditions.invisibilityOf(element));
                 break;
         }
+    }
+    public void createNewAdmin(User user){
+        buttonAdd.click();
+        waitForElementStatus("visible", selectCategories.get(0));
+        addNewUser(user);
+        waitForElementStatus("visible", buttonAdd);
+    }
+
+    public void deleteAdmin(){
+        deleteIcon.click();
+        waitForElementStatus("visible", deletedConfirmed);
+        askForElement(deletedConfirmed);
+        waitForElementStatus("visible",loadingSpinner);
+        waitForElementStatus("noVisible",loadingSpinner);
     }
 
 }
